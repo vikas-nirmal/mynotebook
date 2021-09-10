@@ -25,6 +25,7 @@ router.post(
     }),
   ],
   async (req, res) => {
+    let success = false
     //Errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -79,6 +80,7 @@ router.post(
     body("password", "Password cannot be empty").exists(),
   ],
   async (req, res) => {
+    let success = false
     //Errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -111,7 +113,8 @@ router.post(
           }
         }
         const authtoken = jwt.sign(data, JWT_SECRET)
-        res.json({authtoken});
+        success = true
+        res.json({success, authtoken});
 
 
       

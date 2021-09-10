@@ -38,7 +38,7 @@ const AddNote = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="description" className="form-label">
-              Example textarea
+              Discription
             </label>
             <textarea
               className="form-control mb-3"
