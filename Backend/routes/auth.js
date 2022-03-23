@@ -30,9 +30,11 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
+      
     }
 
     // check if user is already exist or not
+    const {name, email, password} =req.body;
     try {
       let user = await User.findOne({ email: req.body.email });
 
@@ -55,8 +57,8 @@ router.post(
         }
       }
       const authtoken = jwt.sign(data, JWT_SECRET)
-      success = true
       res.json({authtoken});
+      let success = true
     } catch (error) {
       console.error(error.message);
       res.status(500).send("Internal server error");

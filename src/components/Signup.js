@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
 
-    const [credentials, setCredentials] = useState({name:"", email:"", password:"", cpassword:""})
+    const [credentials, setCredentials] = useState({name:"", email:"", password:""})
 
     let history = useHistory();
 
@@ -17,11 +17,14 @@ const Signup = () => {
             body: JSON.stringify({name: credentials.name, email: credentials.email, password: credentials.password})
           });
           const json = await response.json();
-          console.log(json);
           if (json.success){
               //save the token and redirect
               localStorage.setItem('token', json.authtoken);    
               history.push('/')
+              props.showAlert("Account Created Successfully", "success")
+          }
+          else{
+              props.showAlert("Invalid Details", "danger")
           }
     }
 
@@ -67,19 +70,6 @@ const Signup = () => {
             name="password"
             value={credentials.password}
             id="password"
-            onChange={onChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="cpassword" className="form-label">
-           Confirm Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            name="cpassword"
-            value={credentials.cpassword}
-            id="cpassword"
             onChange={onChange}
           />
         </div>
